@@ -1,5 +1,8 @@
 import numpy as np
 import warnings
+import os
+import sys
+from skimage.io import imread, imsave
 
 def anisodiff(img,niter=1,kappa=50,gamma=0.1,step=(1.,1.),option=1,ploton=False):
 	"""
@@ -90,7 +93,7 @@ def anisodiff(img,niter=1,kappa=50,gamma=0.1,step=(1.,1.),option=1,ploton=False)
 
 		fig.canvas.draw()
 
-	for ii in xrange(niter):
+	for ii in range(niter):
 
 		# calculate the diffs
 		deltaS[:-1,: ] = np.diff(imgout,axis=0)
@@ -222,7 +225,7 @@ def anisodiff3(stack,niter=1,kappa=50,gamma=0.1,step=(1.,1.,1.),option=1,ploton=
 
 		fig.canvas.draw()
 
-	for ii in xrange(niter):
+	for ii in range(niter):
 
 		# calculate the diffs
 		deltaD[:-1,: ,:  ] = np.diff(stackout,axis=0)
@@ -271,11 +274,9 @@ if __name__ == "__main__":
 
     img = imread(sys.argv[1])[:, :, :3]
 
-    anisodiff(img)
-
     base = os.path.basename(sys.argv[1])
 
-    imsave("autorenders/{}-{}.png".format(os.path.splitext(base)[0], n),
-        render(img, samples))
+    imsave("autorenders/{}-{}.png".format(os.path.splitext(base)[0], 0),
+        anisodiff3(img, 15, 100, 0.5, (1.,1.,6.), 1))
 
     print("Done!")
