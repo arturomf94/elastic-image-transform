@@ -56,7 +56,6 @@ if __name__ == "__main__":
 
     images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
     images.sort(key = natural_keys)
-    import pdb; pdb.set_trace()
     frame = cv2.imread(os.path.join(image_folder, images[0]))
     height, width, layers = frame.shape
 
